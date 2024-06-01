@@ -27,7 +27,7 @@ git clone https://github.com/smarty/smartystreets-javascript-sdk.git
 ## Obtaining an API Key
 
 -   https://www.smarty.com/pricing/us-address-autocomplete -> Choose Free account and follow the steps
--   Then click on the left sidebar -> API keys
+-   Then click on the left sidebar -> API keys (create a Server key)
 
 ## Recreating the example
 
