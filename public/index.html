@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SmartStreets Autocomplete</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div class="container my-4">
+            <form>
+                <input type="text" autocomplete="off" id="address" />
+            </form>
+
+            <div>
+                <h2>Suggestions</h2>
+                <hr />
+                <ul id="suggestions"></ul>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+        <script>
+            // import axios from 'axios';
+            const addressEl = document.getElementById("address");
+            const suggestionsEl = document.getElementById("suggestions");
+
+            const showSuggestions = (suggestions) => {
+                /**
+                 * {
+                 * streetLine: '4770 N Lincoln Ave',
+                 * secondary: 'Ste 2',
+                 * city: 'Chicago',
+                 * state: 'IL',
+                 * zipcode: '60625',
+                 * entries: 1
+                 * },
+                 */
+                let innerHTML = "";
+                suggestions.forEach(
+                    (s) =>
+                        (innerHTML += `<li>
+                        <div>Streetline: ${s.streetline}</div>
+                        <div>Secondary: ${s.secondary}</div>
+                        <div>Streetline: ${s.city}</div>
+                        <div>Streetline: ${s.state}</div>
+                        <div>Streetline: ${s.zipcode}</div>
+                    </li>`)
+                );
+                suggestionsEl.innerHTML = innerHTML;
+            };
+
+            const fetchAndShowSuggestions = async function (event) {
+                const response = await axios.get(`/suggestions`, {
+                    params: {
+                        input: addressEl.value,
+                    },
+                });
+                showSuggestions(response.data.result);
+            };
+
+            addressEl.addEventListener(
+                "input",
+                _.debounce(fetchAndShowSuggestions, 400)
+            );
+        </script>
+    </body>
+</html>
