@@ -36,12 +36,12 @@ const lookupSimple = async (input) => {
 };
 
 // *** Using Filter and Prefer ***
-const lookupFilterAndPrefer = async (input) => {
+const lookupFilterAndPrefer = async (input, includeCitiesArr, includeStatesArr) => {
     let lookup = new Lookup(input);
 
     lookup.maxResults = 10;
-    lookup.includeOnlyCities = ["Chicago,La Grange,IL", "Blaine,WA"];
-    lookup.preferStates = ["IL"];
+    lookup.includeOnlyCities(includeCitiesArr); // ["Chicago,La Grange,IL", "Blaine,WA"];
+    lookup.preferStates(includeStatesArr); // ["IL"];
     lookup.preferRatio = 33;
     lookup.source = "all";
 

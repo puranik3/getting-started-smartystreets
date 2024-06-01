@@ -12,6 +12,13 @@ app.use(express.static('public'));
 
 app.get('/suggestions', async (req, res, next) => {
     const { input } = req.query;
+
+    if (input.trim() === '') {
+        return res.json({
+            result: []
+        });
+    }
+
     const results = await lookupSimple(input);
     res.json(results);
 });
